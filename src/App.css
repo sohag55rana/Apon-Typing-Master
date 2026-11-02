@@ -619,8 +619,15 @@ button:focus-visible {
   }
 
   .kb-row {
-    gap: 3px;
+    display: flex;
+    justify-content: center;
+    gap: 6px; /* কিগুলোর মাঝের গ্যাপ */
+    margin: 6px 0; /* রো গুলოს মাঝে দূরত্ব */
   }
+
+  /* .kb-row {
+    gap: 3px;
+  } */
 
   .kb-row-1 {
     transform: translateX(5px);
@@ -731,7 +738,7 @@ button:focus-visible {
 
 .hand-illustration {
   display: block;
-  width: clamp(100px, 15vw, 150px);
+  width: clamp(140px, 20vw, 190px);
   height: auto;
   overflow: visible;
 }
@@ -1541,9 +1548,21 @@ button:focus-visible {
 
   .actions,
   .result {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    margin-top: auto;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+
+  /* .actions,
+  .result {
     gap: 8px;
     margin-top: 10px;
-  }
+  } */
 
   .test-result {
     margin-top: 10px;
@@ -1606,8 +1625,29 @@ button:focus-visible {
   }
 
   .key {
-    height: 32px;
+    display: grid;
+    width: clamp(38px, 5vw, 55px);
+    height: 50px;
+    flex: 0 1 55px;
+    place-items: center;
+    border: 1px solid var(--finger-border, #e0e5ed);
+    border-bottom-width: 3px;
+    border-radius: 7px;
+    color: #29364d;
+    background: var(--finger-color, #ffffff);
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 1.1rem; /* ২rem থেকে কমিয়ে ১.১rem বা উপযুক্ত সাইজ করা হলো যাতে বাইরে না যায় */
+    margin: 0 2px; /* কিগুলোর মাঝে সামান্য ফাঁকা জায়গা তৈরি করতে */
+    transition:
+      color 120ms ease,
+      background 120ms ease,
+      border-color 120ms ease,
+      transform 120ms ease;
   }
+
+  /* .key {
+    height: 32px;
+  } */
 
   .key.space {
     height: 30px;
