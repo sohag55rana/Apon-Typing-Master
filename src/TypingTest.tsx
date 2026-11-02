@@ -7,6 +7,7 @@ import {
 import HandGuide from "./HandGuide";
 import Keyboard from "./Keyboard";
 import { playTypingSound } from "./typingSounds";
+import { usePassageAutoScroll } from "./usePassageAutoScroll";
 
 const PASSAGES = [
   "Learning a new skill takes patience, practice, and a little curiosity. Start slowly, focus on accuracy, and let your confidence grow with every line. The best progress often comes from small improvements repeated each day.",
@@ -46,8 +47,7 @@ export default function TypingTest({ attempt, onRestart }: Props) {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [correctKey, setCorrectKey] = useState<string | null>(null);
   const [wrongKey, setWrongKey] = useState<string | null>(null);
-  const passageRef = useRef<HTMLElement>(null);
-  const currentCharRef = useRef<HTMLSpanElement>(null);
+  const { passageRef, currentCharRef } = usePassageAutoScroll(typed);
   const audioContextRef = useRef<AudioContext | null>(null);
   const finishSoundPlayedRef = useRef(false);
   const correctKeyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -57,15 +57,6 @@ export default function TypingTest({ attempt, onRestart }: Props) {
   useEffect(() => {
     passageRef.current?.focus();
   }, []);
-
-  useEffect(() => {
-    if (typed.length > 0) {
-      currentCharRef.current?.scrollIntoView({
-        block: "nearest",
-        inline: "nearest",
-      });
-    }
-  }, [typed]);
 
   useEffect(
     () => () => {
@@ -201,7 +192,7 @@ export default function TypingTest({ attempt, onRestart }: Props) {
         onClick={() => passageRef.current?.focus()}
         role="textbox"
         aria-label="Typing input. Type the displayed passage."
-        aria-multiline="false"
+        aria-multiline="true"
         tabIndex={0}
       >
         <div className="passage-text">

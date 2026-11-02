@@ -8,6 +8,7 @@ import HandGuide from "./HandGuide";
 import Keyboard from "./Keyboard";
 import { generateText, PASS_ACCURACY, type Lesson } from "./lessons";
 import { playTypingSound } from "./typingSounds";
+import { usePassageAutoScroll } from "./usePassageAutoScroll";
 
 interface Props {
   lesson: Lesson;
@@ -34,7 +35,7 @@ export default function TypingLesson({
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [correctKey, setCorrectKey] = useState<string | null>(null);
   const [wrongKey, setWrongKey] = useState<string | null>(null);
-  const passageRef = useRef<HTMLElement>(null);
+  const { passageRef, currentCharRef } = usePassageAutoScroll(typed);
   const audioContextRef = useRef<AudioContext | null>(null);
   const finishSoundPlayedRef = useRef(false);
   const correctKeyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -157,7 +158,7 @@ export default function TypingLesson({
         onClick={() => passageRef.current?.focus()}
         role="textbox"
         aria-label="Typing input. Type the displayed passage."
-        aria-multiline="false"
+        aria-multiline="true"
         tabIndex={0}
       >
         {text.split("").map((char, index) => {
@@ -168,7 +169,11 @@ export default function TypingLesson({
             className += " cursor";
           }
           return (
-            <span key={index} className={className}>
+            <span
+              key={index}
+              ref={index === typed.length ? currentCharRef : undefined}
+              className={className}
+            >
               {char === " " ? "\u00A0" : char}
             </span>
           );

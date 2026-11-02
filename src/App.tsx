@@ -3,6 +3,7 @@ import "./App.css";
 import { LESSONS } from "./lessons";
 import TypingLesson from "./TypingLesson";
 import TypingTest from "./TypingTest";
+import logo from "./assets/logo.png";
 
 const STORAGE_KEY = "typing-tutor-completed";
 
@@ -63,7 +64,10 @@ export default function App() {
   return (
     <div className="layout">
       <aside className="sidebar">
-        <h1>Typing Practice</h1>
+        <div className="brand">
+          <img className="brand-logo" src={logo} alt="" />
+          <h1>Apon Typing Master</h1>
+        </div>
         <nav className="mode-nav" aria-label="Practice modes">
           <button
             className={`mode-link${mode === "test" ? " active" : ""}`}
